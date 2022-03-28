@@ -1,12 +1,19 @@
 package view;
 
+import controller.ServerProcessor;
+
 import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Properties;
 
 public class MainClass {
     private final static String DATA_PATH ="./src/connection.properties";
     public static void main(String[] args) {
         int port;
+        ServerSocket serverSocket;
+        Socket clientSocket;
+
         File file = new File(DATA_PATH);
         try{
             if(!file.exists()){
@@ -33,7 +40,26 @@ public class MainClass {
             return;
         }
 
+        try {
+            serverSocket = new ServerSocket(port);
+        } catch (IOException e) {
+            System.out.println("Can't start server on port " + port);
+            return;
+        }
+
         System.out.println("Server started at port " + port);
+
+        while(true){
+            try {
+                clientSocket = serverSocket.accept();
+
+                new ServerProcessor(clientSocket).start();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
 
     }
 
