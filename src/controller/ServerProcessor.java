@@ -1,5 +1,7 @@
 package controller;
 
+import model.entities.Collection;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -14,10 +16,10 @@ public class ServerProcessor extends Thread{
     public void run() {
         boolean running = true;
         String option;
-        DataInputStream dataInput = null;
+        DataInputStream dataInput;
         DataOutputStream dataOutput = null;
-        ObjectInputStream objectInput = null;
-        ObjectOutputStream objectOutput = null;
+        ObjectInputStream objectInput;
+        ObjectOutputStream objectOutput;
 
 
         try {
@@ -27,7 +29,8 @@ public class ServerProcessor extends Thread{
                 option = dataInput.readUTF();
 
                 switch (option){
-                    case "hello" -> System.out.println("Hola mundo");
+                    case "getCollectionList" -> CollectionCotroler.getCollectionList(socket);
+                    case "goodbye" -> sayGoodbye(dataOutput, socket);
                     case "disconnect" -> running = false;
                 }
 
@@ -36,5 +39,23 @@ public class ServerProcessor extends Thread{
             e.printStackTrace();
         }
 
+    }
+
+    private static void sayHello(DataOutputStream dataOutputStream, Socket socket){
+        try {
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("Hola mundo");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void sayGoodbye(DataOutputStream dataOutputStream, Socket socket){
+        try {
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("Adios mundo");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
