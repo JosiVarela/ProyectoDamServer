@@ -30,7 +30,7 @@ public class ServerProcessor extends Thread{
 
                 switch (option){
                     case "getCollectionList" -> CollectionCotroler.getCollectionList(socket);
-                    case "goodbye" -> sayGoodbye(dataOutput, socket);
+                    case "getCollectionInfoById" -> sayGoodbye(dataOutput, socket);
                     case "disconnect" -> running = false;
                 }
 

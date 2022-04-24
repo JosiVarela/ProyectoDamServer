@@ -15,19 +15,23 @@ public class DBConnection {
     public static void readConnectionData(){
         //TODO Read properties file for connection config
 
-        host="localhost";
+        host="192.168.56.100";
         port="3306";
         dbName="library";
         dbUser="interfaces";
         dbPassword="abc123.";
     }
 
-    public static void Connect() throws ClassNotFoundException, SQLException {
+    public static void connect() throws SQLException {
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String urlCon="jdbc:mysql://"+host+":"+port+"/"+dbName;
+            connection = DriverManager.getConnection(urlCon, dbUser, dbPassword);
+            connection.setAutoCommit(false);
+        }catch (ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        String urlCon="jdbc:mysql://"+host+":"+port+"/"+dbName;
-        connection = DriverManager.getConnection(urlCon, dbUser, dbPassword);
-        connection.setAutoCommit(false);
     }
 
     public static Connection getConnection(){

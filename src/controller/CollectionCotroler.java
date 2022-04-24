@@ -8,6 +8,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.List;
 
 public class CollectionCotroler {
@@ -16,9 +17,11 @@ public class CollectionCotroler {
         ObjectOutputStream objectOutputStream;
 
 
-        List<Collection> collectionList = CollectionManagemet.getCollectionList();
-
         try {
+            DBConnection.connect();
+            List<Collection> collectionList = CollectionManagemet.getCollectionList(DBConnection.getConnection());
+            DBConnection.getConnection().close();
+
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
             dataOutputStream.writeUTF("OK");
@@ -31,8 +34,9 @@ public class CollectionCotroler {
 
         } catch (IOException e) {
             System.out.println("Connection lost");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
 
 
     }

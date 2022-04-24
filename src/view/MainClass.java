@@ -1,5 +1,6 @@
 package view;
 
+import controller.DBConnection;
 import controller.ServerProcessor;
 
 import java.io.*;
@@ -28,6 +29,7 @@ public class MainClass {
             }else{
                 try{
 
+                    DBConnection.readConnectionData();
                     port = Integer.parseInt(loadConnectionData(file));
 
                 } catch (IOException e) {
