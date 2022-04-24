@@ -33,11 +33,14 @@ public class CollectionCotroler {
             objectOutputStream.flush();
 
         } catch (IOException e) {
-            System.out.println("Connection lost");
+            e.printStackTrace();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeUTF("SQLE Error");
+            } catch (IOException ex) {
+                e.printStackTrace();
+            }
         }
-
-
     }
 }

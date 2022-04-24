@@ -4,10 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Collection implements Serializable {
-    int id;
-    String title;
-    Date publishDate;
-    String argument;
+    private int id;
+    private String title;
+    private Date publishDate;
+    private String argument;
+    private int comicQuantity;
 
 
     public Collection() {
@@ -50,5 +51,13 @@ public class Collection implements Serializable {
 
     public void setArgument(String argument) {
         this.argument = argument;
+    }
+
+    public int getComicQuantity() {
+        return comicQuantity;
+    }
+
+    public void setComicQuantity(int comicQuantity) {
+        this.comicQuantity = comicQuantity;
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public class CollectionDAO implements ICollectionDAO {
     @Override
     public List<Collection> getCollectionList(Connection connection) throws SQLException {
-        String query = "select * from comic_collection";
+        String query = "select id_col, title from comic_collection";
         List<Collection> collectionList = new ArrayList<>();
 
         Statement statement = connection.createStatement();
@@ -20,7 +20,7 @@ public class CollectionDAO implements ICollectionDAO {
 
         while (resultSet.next()){
             collectionList.add(new Collection(resultSet.getInt(1), resultSet.getString(2),
-                    resultSet.getDate(3), resultSet.getString(4)));
+                     null, null));
         }
 
         statement.close();
