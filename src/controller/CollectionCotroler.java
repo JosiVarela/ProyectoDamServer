@@ -43,4 +43,42 @@ public class CollectionCotroler {
             }
         }
     }
+
+    public static void getCollectionInfoById(Socket socket){
+        DataInputStream dataInputStream;
+        DataOutputStream dataOutputStream;
+        ObjectOutputStream objectOutputStream;
+        Collection collection;
+        int id;
+
+        try{
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            id = dataInputStream.readInt();
+
+
+            DBConnection.connect();
+
+            collection = CollectionManagemet.getCollectionInfoById(DBConnection.getConnection(), id);
+            collection.setComicQuantity(CollectionManagemet.getCollectionNumbersQuantity(DBConnection.getConnection(),
+                    id));
+
+            DBConnection.getConnection().close();
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("OK");
+
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectOutputStream.writeObject(collection);
+            objectOutputStream.flush();
+
+        } catch (SQLException e) {
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeUTF("SQLE Error");
+            } catch (IOException ex) {
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

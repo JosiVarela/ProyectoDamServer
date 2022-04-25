@@ -28,4 +28,44 @@ public class CollectionDAO implements ICollectionDAO {
 
         return collectionList;
     }
+
+    @Override
+    public Collection getCollectionInfoById(Connection connection, int id) throws SQLException {
+        String query = "select * from comic_collection where id_col = ?";
+        Collection collection = null;
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if(resultSet.next()){
+            collection = new Collection(id, resultSet.getString(2), resultSet.getDate(3),
+                    resultSet.getString(4));
+        }
+
+        statement.close();
+        resultSet.close();
+
+        return collection;
+    }
+
+    @Override
+    public int getCollectionNumbersQuantity(Connection connection, int id) throws SQLException {
+        String query = "select count(*) from comic_number where collection_id = ?";
+        int collectionQuantity = 0;
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if(resultSet.next()){
+            collectionQuantity = resultSet.getInt(1);
+        }
+
+        return collectionQuantity;
+    }
 }

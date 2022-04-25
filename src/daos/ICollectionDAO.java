@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ICollectionDAO {
     List<Collection> getCollectionList(Connection connection) throws SQLException;
+    Collection getCollectionInfoById(Connection connection, int id) throws SQLException;
+    int getCollectionNumbersQuantity(Connection connection, int id) throws SQLException;
 }
