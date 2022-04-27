@@ -31,6 +31,7 @@ public class ServerProcessor extends Thread{
                 switch (option){
                     case "getCollectionList" -> CollectionCotroler.getCollectionList(socket);
                     case "getCollectionInfoById" -> CollectionCotroler.getCollectionInfoById(socket);
+                    case "ping" -> ping(socket);
                     case "disconnect" -> running = false;
                 }
 
@@ -41,10 +42,10 @@ public class ServerProcessor extends Thread{
 
     }
 
-    private static void sayHello(DataOutputStream dataOutputStream, Socket socket){
+    private static void ping(Socket socket){
         try {
-            dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            dataOutputStream.writeUTF("Hola mundo");
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("pong");
         } catch (IOException e) {
             e.printStackTrace();
         }
