@@ -1,7 +1,5 @@
 package controller;
 
-import model.entities.Collection;
-
 import java.io.*;
 import java.net.Socket;
 
@@ -29,8 +27,9 @@ public class ServerProcessor extends Thread{
                 option = dataInput.readUTF();
 
                 switch (option){
-                    case "getCollectionList" -> CollectionCotroler.getCollectionList(socket);
-                    case "getCollectionInfoById" -> CollectionCotroler.getCollectionInfoById(socket);
+                    case "getCollectionList" -> CollectionCotroller.getCollectionList(socket);
+                    case "getCollectionInfoById" -> CollectionCotroller.getCollectionInfoById(socket);
+                    case  "getCollectionByName" -> CollectionCotroller.getCollectionByName(socket);
                     case "ping" -> ping(socket);
                     case "disconnect" -> running = false;
                 }
