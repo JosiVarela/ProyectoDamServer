@@ -4,10 +4,7 @@ import model.CollectionManagemet;
 import model.NumberManagement;
 import model.entities.Collection;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.List;
@@ -119,6 +116,84 @@ public class CollectionController {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("SQLE Error");
             } catch (IOException ex) {
+            }
+        }
+    }
+
+    public static void existsCollectionWithName(Socket socket){
+        DataInputStream dataInputStream;
+        DataOutputStream dataOutputStream;
+        String name;
+        int id;
+        boolean result;
+        try{
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            name = dataInputStream.readUTF();
+
+
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            id = dataInputStream.readInt();
+
+
+            DBConnection.connect();
+            result = CollectionManagemet.existsCollectionWithName(DBConnection.getConnection(), id, name);
+            DBConnection.getConnection().close();
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("OK");
+
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeBoolean(result);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeUTF("SQLE Error");
+
+            } catch (IOException ex) {
+            }
+        }
+    }
+
+    public static void updateCollection(Socket socket){
+        ObjectInputStream objectInputStream;
+        DataOutputStream dataOutputStream;
+        Collection col;
+
+        try{
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
+            col = (Collection) objectInputStream.readObject();
+
+            DBConnection.connect();
+            CollectionManagemet.updateCollection(DBConnection.getConnection(), col);
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("OK");
+
+        } catch (IOException e) {
+            try {
+                DBConnection.getConnection().rollback();
+            } catch (SQLException ex) {
+            }
+        } catch (ClassNotFoundException e) {
+        } catch (SQLException e) {
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeUTF("SQLE Error");
+            } catch (IOException ex) {
+            }
+            try {
+                DBConnection.getConnection().rollback();
+            } catch (SQLException ex) {
+            }
+        }finally {
+            try {
+                DBConnection.getConnection().commit();
+                DBConnection.getConnection().close();
+            } catch (SQLException e) {
             }
         }
     }

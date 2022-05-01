@@ -64,7 +64,7 @@ public class CollectionDAO implements ICollectionDAO {
         ResultSet resultSet = statement.executeQuery();
 
         if(resultSet.next()){
-            collection = new Collection(id, resultSet.getString(2), resultSet.getDate(3),
+            collection = new Collection(id, resultSet.getString(2), resultSet.getDate(3).toLocalDate(),
                     resultSet.getString(4));
         }
 
@@ -90,5 +90,41 @@ public class CollectionDAO implements ICollectionDAO {
         }
 
         return collectionQuantity;
+    }
+
+    @Override
+    public boolean existsCollectionWithName(Connection connection, int id, String name) throws SQLException {
+        String query = "select * from comic_collection where id_col != ? and title = ?";
+        boolean result = false;
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setInt(1, id);
+        statement.setString(2, name);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if(resultSet.next()){
+            result = true;
+        }
+
+        statement.close();
+        resultSet.close();
+
+        return result;
+    }
+
+    @Override
+    public void updateCollection(Connection connection, Collection collection) throws SQLException {
+        String query = "update comic_collection set title = ?, first_publish = ?, argument = ? where id_col = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setString(1, collection.getTitle());
+        statement.setDate(2, Date.valueOf(collection.getPublishDate()));
+        statement.setString(3, collection.getArgument());
+        statement.setInt(4, collection.getId());
+
+        statement.executeUpdate();
     }
 }

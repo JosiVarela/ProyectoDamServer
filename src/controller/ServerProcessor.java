@@ -1,5 +1,7 @@
 package controller;
 
+import model.entities.Collection;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -29,7 +31,9 @@ public class ServerProcessor extends Thread{
                 switch (option){
                     case "getCollectionList" -> CollectionController.getCollectionList(socket);
                     case "getCollectionInfoById" -> CollectionController.getCollectionInfoById(socket);
-                    case  "getCollectionsByName" -> CollectionController.getCollectionsByName(socket);
+                    case "getCollectionsByName" -> CollectionController.getCollectionsByName(socket);
+                    case "existCollectionWithName" -> CollectionController.existsCollectionWithName(socket);
+                    case "updateCollection" -> CollectionController.updateCollection(socket);
                     case "ping" -> ping(socket);
                     case "disconnect" -> running = false;
                 }

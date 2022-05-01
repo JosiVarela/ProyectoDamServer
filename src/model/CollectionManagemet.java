@@ -23,4 +23,12 @@ public class CollectionManagemet {
     public static int getCollectionNumbersQuantity(Connection connection, int id) throws SQLException {
         return new CollectionDAO().getCollectionNumbersQuantity(connection, id);
     }
+
+    public static boolean existsCollectionWithName(Connection connection, int id, String name) throws SQLException {
+        return new CollectionDAO().existsCollectionWithName(connection, id, name);
+    }
+
+    public static void updateCollection(Connection connection, Collection collection) throws SQLException {
+        new CollectionDAO().updateCollection(connection, collection);
+    }
 }
