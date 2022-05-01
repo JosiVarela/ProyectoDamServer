@@ -12,6 +12,10 @@ public class CollectionManagemet {
         return new CollectionDAO().getCollectionList(connection);
     }
 
+    public static List<Collection> getCollectionListByName(Connection connection, String name) throws SQLException {
+        return new CollectionDAO().getCollectionListByName(connection, name);
+    }
+
     public static Collection getCollectionInfoById(Connection connection, int id) throws SQLException {
         return new CollectionDAO().getCollectionInfoById(connection, id);
     }

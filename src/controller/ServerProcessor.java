@@ -27,9 +27,9 @@ public class ServerProcessor extends Thread{
                 option = dataInput.readUTF();
 
                 switch (option){
-                    case "getCollectionList" -> CollectionCotroller.getCollectionList(socket);
-                    case "getCollectionInfoById" -> CollectionCotroller.getCollectionInfoById(socket);
-                    case  "getCollectionByName" -> CollectionCotroller.getCollectionByName(socket);
+                    case "getCollectionList" -> CollectionController.getCollectionList(socket);
+                    case "getCollectionInfoById" -> CollectionController.getCollectionInfoById(socket);
+                    case  "getCollectionsByName" -> CollectionController.getCollectionsByName(socket);
                     case "ping" -> ping(socket);
                     case "disconnect" -> running = false;
                 }

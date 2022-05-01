@@ -30,6 +30,29 @@ public class CollectionDAO implements ICollectionDAO {
     }
 
     @Override
+    public List<Collection> getCollectionListByName(Connection connection, String name) throws SQLException {
+        String query = "select id_col, title from comic_collection where title like(?)";
+        List<Collection> collectionList = new ArrayList<>();
+        name = "%" + name + "%";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setString(1, name);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        while(resultSet.next()){
+            collectionList.add(new Collection(resultSet.getInt(1), resultSet.getString(2),
+                    null, null));
+        }
+
+        statement.close();
+        resultSet.close();
+
+        return collectionList;
+    }
+
+    @Override
     public Collection getCollectionInfoById(Connection connection, int id) throws SQLException {
         String query = "select * from comic_collection where id_col = ?";
         Collection collection = null;

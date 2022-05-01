@@ -10,10 +10,9 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-public class CollectionCotroller {
+public class CollectionController {
     public static void getCollectionList(Socket socket){
         DataOutputStream dataOutputStream;
         ObjectOutputStream objectOutputStream;
@@ -88,18 +87,20 @@ public class CollectionCotroller {
         }
     }
 
-    public static void getCollectionByName(Socket socket){
+    public static void getCollectionsByName(Socket socket){
         DataInputStream dataInputStream;
         DataOutputStream dataOutputStream;
         ObjectOutputStream objectOutputStream;
         String colName;
-        List<Collection> collectionList = new ArrayList<>();
+        List<Collection> collectionList;
 
         try{
             dataInputStream = new DataInputStream(socket.getInputStream());
             colName = dataInputStream.readUTF();
 
             DBConnection.connect();
+
+            collectionList = CollectionManagemet.getCollectionListByName(DBConnection.getConnection(), colName);
 
             DBConnection.getConnection().close();
 
@@ -113,6 +114,7 @@ public class CollectionCotroller {
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
+            e.printStackTrace();
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("SQLE Error");
