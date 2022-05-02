@@ -11,6 +11,8 @@ public interface ICollectionDAO {
     List<Collection> getCollectionListByName(Connection connection, String name) throws SQLException;
     Collection getCollectionInfoById(Connection connection, int id) throws SQLException;
     int getCollectionNumbersQuantity(Connection connection, int id) throws SQLException;
-    boolean existsCollectionWithName(Connection connection, int id, String name) throws SQLException;
+    boolean existsCollectionWithNameNotId(Connection connection, int id, String name) throws SQLException;
+    boolean existsCollectionWithSameName(Connection connection, String name) throws SQLException;
     void updateCollection(Connection connection, Collection collection) throws SQLException;
+    void insertCollection(Connection connection, Collection collection) throws SQLException;
 }

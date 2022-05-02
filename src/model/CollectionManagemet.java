@@ -25,10 +25,17 @@ public class CollectionManagemet {
     }
 
     public static boolean existsCollectionWithName(Connection connection, int id, String name) throws SQLException {
-        return new CollectionDAO().existsCollectionWithName(connection, id, name);
+        return new CollectionDAO().existsCollectionWithNameNotId(connection, id, name);
+    }
+
+    public static boolean existsCollectionWithName(Connection connection, String name) throws SQLException {
+        return new CollectionDAO().existsCollectionWithSameName(connection, name);
     }
 
     public static void updateCollection(Connection connection, Collection collection) throws SQLException {
         new CollectionDAO().updateCollection(connection, collection);
+    }
+    public static void insertCollection(Connection connection, Collection collection) throws SQLException {
+        new CollectionDAO().insertCollection(connection, collection);
     }
 }

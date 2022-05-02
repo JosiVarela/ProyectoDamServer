@@ -93,8 +93,8 @@ public class CollectionDAO implements ICollectionDAO {
     }
 
     @Override
-    public boolean existsCollectionWithName(Connection connection, int id, String name) throws SQLException {
-        String query = "select * from comic_collection where id_col != ? and title = ?";
+    public boolean existsCollectionWithNameNotId(Connection connection, int id, String name) throws SQLException {
+        String query = "select id_col from comic_collection where id_col != ? and title = ?";
         boolean result = false;
 
         PreparedStatement statement = connection.prepareStatement(query);
@@ -115,6 +115,27 @@ public class CollectionDAO implements ICollectionDAO {
     }
 
     @Override
+    public boolean existsCollectionWithSameName(Connection connection, String name) throws SQLException {
+        String query = "select id_col from comic_collection where title = ?";
+        boolean result = false;
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setString(1, name);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if(resultSet.next()){
+            result = true;
+        }
+
+        resultSet.close();
+        statement.close();
+
+        return result;
+    }
+
+    @Override
     public void updateCollection(Connection connection, Collection collection) throws SQLException {
         String query = "update comic_collection set title = ?, first_publish = ?, argument = ? where id_col = ?";
 
@@ -124,6 +145,19 @@ public class CollectionDAO implements ICollectionDAO {
         statement.setDate(2, Date.valueOf(collection.getPublishDate()));
         statement.setString(3, collection.getArgument());
         statement.setInt(4, collection.getId());
+
+        statement.executeUpdate();
+    }
+
+    @Override
+    public void insertCollection(Connection connection, Collection collection) throws SQLException {
+        String query = "insert into comic_collection(title, first_publish, argument) values (?, ?, ?)";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setString(1, collection.getTitle());
+        statement.setDate(2, Date.valueOf(collection.getPublishDate()));
+        statement.setString(3, collection.getArgument());
 
         statement.executeUpdate();
     }
