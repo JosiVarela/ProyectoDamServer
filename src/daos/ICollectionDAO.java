@@ -13,6 +13,8 @@ public interface ICollectionDAO {
     int getCollectionNumbersQuantity(Connection connection, int id) throws SQLException;
     boolean existsCollectionWithNameNotId(Connection connection, int id, String name) throws SQLException;
     boolean existsCollectionWithSameName(Connection connection, String name) throws SQLException;
+    boolean existsCollectionWithId(Connection connection, int id) throws SQLException;
     void updateCollection(Connection connection, Collection collection) throws SQLException;
     void insertCollection(Connection connection, Collection collection) throws SQLException;
+    void deleteCollection(Connection connection, int id) throws SQLException;
 }

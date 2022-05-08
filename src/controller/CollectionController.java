@@ -1,6 +1,6 @@
 package controller;
 
-import model.CollectionManagemet;
+import model.CollectionManagement;
 import model.NumberManagement;
 import model.entities.Collection;
 
@@ -17,7 +17,7 @@ public class CollectionController {
 
         try {
             DBConnection.connect();
-            List<Collection> collectionList = CollectionManagemet.getCollectionList(DBConnection.getConnection());
+            List<Collection> collectionList = CollectionManagement.getCollectionList(DBConnection.getConnection());
             DBConnection.getConnection().close();
 
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
@@ -56,8 +56,8 @@ public class CollectionController {
 
             DBConnection.connect();
 
-            collection = CollectionManagemet.getCollectionInfoById(DBConnection.getConnection(), id);
-            collection.setComicQuantity(CollectionManagemet.getCollectionNumbersQuantity(DBConnection.getConnection(),
+            collection = CollectionManagement.getCollectionInfoById(DBConnection.getConnection(), id);
+            collection.setComicQuantity(CollectionManagement.getCollectionNumbersQuantity(DBConnection.getConnection(),
                     id));
 
             collection.setNumberList(NumberManagement.getNumberListByColId(DBConnection.getConnection(),
@@ -97,7 +97,7 @@ public class CollectionController {
 
             DBConnection.connect();
 
-            collectionList = CollectionManagemet.getCollectionListByName(DBConnection.getConnection(), colName);
+            collectionList = CollectionManagement.getCollectionListByName(DBConnection.getConnection(), colName);
 
             DBConnection.getConnection().close();
 
@@ -136,7 +136,7 @@ public class CollectionController {
 
 
             DBConnection.connect();
-            result = CollectionManagemet.existsCollectionWithName(DBConnection.getConnection(), id, name);
+            result = CollectionManagement.existsCollectionWithName(DBConnection.getConnection(), id, name);
             DBConnection.getConnection().close();
 
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
@@ -168,7 +168,38 @@ public class CollectionController {
             colName = dataInputStream.readUTF();
 
             DBConnection.connect();
-            result = CollectionManagemet.existsCollectionWithName(DBConnection.getConnection(), colName);
+            result = CollectionManagement.existsCollectionWithName(DBConnection.getConnection(), colName);
+            DBConnection.getConnection().close();
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("OK");
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeBoolean(result);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeUTF("SQLE Error");
+            } catch (IOException ex) {
+            }
+        }
+    }
+
+    public static void existsCollectionWithId(Socket socket){
+        DataInputStream dataInputStream;
+        DataOutputStream dataOutputStream;
+        int colId;
+        boolean result;
+
+        try{
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            colId = dataInputStream.readInt();
+
+            DBConnection.connect();
+            result = CollectionManagement.existsCollectionWithId(DBConnection.getConnection(), colId);
             DBConnection.getConnection().close();
 
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
@@ -198,7 +229,7 @@ public class CollectionController {
             col = (Collection) objectInputStream.readObject();
 
             DBConnection.connect();
-            CollectionManagemet.updateCollection(DBConnection.getConnection(), col);
+            CollectionManagement.updateCollection(DBConnection.getConnection(), col);
 
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataOutputStream.writeUTF("OK");
@@ -238,7 +269,7 @@ public class CollectionController {
             collection = (Collection) objectInputStream.readObject();
 
             DBConnection.connect();
-            CollectionManagemet.insertCollection(DBConnection.getConnection(), collection);
+            CollectionManagement.insertCollection(DBConnection.getConnection(), collection);
 
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataOutputStream.writeUTF("OK");
@@ -255,6 +286,50 @@ public class CollectionController {
                 dataOutputStream.writeUTF("SQLE Error");
             } catch (IOException ex) {
             }
+            try {
+                DBConnection.getConnection().rollback();
+            } catch (SQLException ex) {
+            }
+        }finally {
+            try {
+                DBConnection.getConnection().commit();
+                DBConnection.getConnection().close();
+            } catch (SQLException e) {
+            }
+        }
+    }
+
+    public static void deleteCollection(Socket socket){
+        DataOutputStream dataOutputStream;
+        DataInputStream dataInputStream;
+        int colId;
+        try{
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            colId = dataInputStream.readInt();
+
+            DBConnection.connect();
+            CollectionManagement.deleteCollection(DBConnection.getConnection(), colId);
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("OK");
+
+
+        } catch (SQLException e) {
+            int errorCode = e.getErrorCode();
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                if (errorCode == 1451) {
+                    dataOutputStream.writeUTF("SQLE Foreing");
+                } else {
+                    dataOutputStream.writeUTF("SQLE Error");
+                }
+            }catch (IOException ex){
+            }
+            try {
+                DBConnection.getConnection().rollback();
+            } catch (SQLException ex) {
+            }
+        } catch (IOException e) {
             try {
                 DBConnection.getConnection().rollback();
             } catch (SQLException ex) {

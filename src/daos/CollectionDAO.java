@@ -136,6 +136,27 @@ public class CollectionDAO implements ICollectionDAO {
     }
 
     @Override
+    public boolean existsCollectionWithId(Connection connection, int id) throws SQLException {
+        String query = "select id_col from comic_collection where id_col = ?";
+        boolean result = false;
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if(resultSet.next()){
+            result = true;
+        }
+
+        resultSet.close();
+        statement.close();
+
+        return result;
+    }
+
+    @Override
     public void updateCollection(Connection connection, Collection collection) throws SQLException {
         String query = "update comic_collection set title = ?, first_publish = ?, argument = ? where id_col = ?";
 
@@ -158,6 +179,17 @@ public class CollectionDAO implements ICollectionDAO {
         statement.setString(1, collection.getTitle());
         statement.setDate(2, Date.valueOf(collection.getPublishDate()));
         statement.setString(3, collection.getArgument());
+
+        statement.executeUpdate();
+    }
+
+    @Override
+    public void deleteCollection(Connection connection, int id) throws SQLException {
+        String query = "delete from comic_collection where id_col = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setInt(1, id);
 
         statement.executeUpdate();
     }

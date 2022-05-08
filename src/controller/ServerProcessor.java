@@ -27,13 +27,17 @@ public class ServerProcessor extends Thread{
                 option = dataInput.readUTF();
 
                 switch (option){
+                    //COLLECTION MANAGEMENT
                     case "getCollectionList" -> CollectionController.getCollectionList(socket);
                     case "getCollectionInfoById" -> CollectionController.getCollectionInfoById(socket);
                     case "getCollectionsByName" -> CollectionController.getCollectionsByName(socket);
                     case "existCollectionWithNameNotId" -> CollectionController.existsCollectionWithNameNotId(socket);
                     case "existCollectionWithSameName" -> CollectionController.existsCollectionWithSameName(socket);
+                    case "existCollectionWithId" -> CollectionController.existsCollectionWithId(socket);
                     case "updateCollection" -> CollectionController.updateCollection(socket);
                     case "insertCollection" -> CollectionController.insertCollection(socket);
+                    case "deleteCollection" -> CollectionController.deleteCollection(socket);
+                    //SERVER MANAGEMENT
                     case "ping" -> ping(socket);
                     case "disconnect" -> running = false;
                 }

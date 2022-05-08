@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public class CollectionManagemet {
+public class CollectionManagement {
     public static List<Collection> getCollectionList(Connection connection) throws SQLException {
         return new CollectionDAO().getCollectionList(connection);
     }
@@ -32,10 +32,18 @@ public class CollectionManagemet {
         return new CollectionDAO().existsCollectionWithSameName(connection, name);
     }
 
+    public static boolean existsCollectionWithId(Connection connection, int id) throws SQLException {
+        return new CollectionDAO().existsCollectionWithId(connection, id);
+    }
+
     public static void updateCollection(Connection connection, Collection collection) throws SQLException {
         new CollectionDAO().updateCollection(connection, collection);
     }
     public static void insertCollection(Connection connection, Collection collection) throws SQLException {
         new CollectionDAO().insertCollection(connection, collection);
+    }
+
+    public static void deleteCollection(Connection connection, int id) throws SQLException {
+        new CollectionDAO().deleteCollection(connection, id);
     }
 }
