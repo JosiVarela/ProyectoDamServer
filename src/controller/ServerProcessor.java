@@ -37,6 +37,10 @@ public class ServerProcessor extends Thread{
                     case "updateCollection" -> CollectionController.updateCollection(socket);
                     case "insertCollection" -> CollectionController.insertCollection(socket);
                     case "deleteCollection" -> CollectionController.deleteCollection(socket);
+                    case "getCollectionName" -> CollectionController.getCollectionName(socket);
+                    //COMIC NUBERS MANAGEMENT
+                    case "existsComicNumber" -> NumberController.existsNumber(socket);
+                    case "getComicNumber" -> NumberController.getComicNumber(socket);
                     //SERVER MANAGEMENT
                     case "ping" -> ping(socket);
                     case "disconnect" -> running = false;

@@ -8,14 +8,13 @@ import java.sql.SQLException;
 public class NumberCopiesDAO implements INumberCopiesDAO{
 
     @Override
-    public int getNumberCopiesQuantityByNumberId(Connection connection, String isbn,int numberId) throws SQLException {
+    public int getNumberCopiesQuantityByNumberId(Connection connection, String isbn) throws SQLException {
         int quantity = 0;
-        String query = "select count(*) from number_copies where isbn = ? and numberId = ?";
+        String query = "select count(*) from number_copies where isbn = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
 
         statement.setString(1, isbn);
-        statement.setInt(2, numberId);
 
         ResultSet resultSet = statement.executeQuery();
 

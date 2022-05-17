@@ -17,4 +17,5 @@ public interface ICollectionDAO {
     void updateCollection(Connection connection, Collection collection) throws SQLException;
     void insertCollection(Connection connection, Collection collection) throws SQLException;
     void deleteCollection(Connection connection, int id) throws SQLException;
+    String getCollectionName(Connection connection, int colId) throws SQLException;
 }

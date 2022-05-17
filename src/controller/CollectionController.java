@@ -342,4 +342,39 @@ public class CollectionController {
             }
         }
     }
+
+    public static void getCollectionName(Socket socket){
+        int colId;
+        String colName;
+        DataInputStream dataInputStream;
+        DataOutputStream dataOutputStream;
+
+        try{
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            colId = dataInputStream.readInt();
+
+            DBConnection.connect();
+            colName = CollectionManagement.getCollectionName(DBConnection.getConnection(), colId);
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("OK");
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF(colName);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeUTF("SQLE Error");
+            } catch (IOException ex) {
+            }
+        }finally {
+            try {
+                DBConnection.getConnection().close();
+            } catch (SQLException e) {
+            }
+        }
+    }
 }

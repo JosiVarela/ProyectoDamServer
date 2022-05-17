@@ -3,6 +3,8 @@ package daos;
 import model.entities.ComicNumber;
 import model.NumberCopiesManagement;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +17,6 @@ public class ComicNumberDAO implements IComicNumberDAO{
     public List<ComicNumber> getComicNumberListByColId(Connection connection, int colId) throws SQLException {
         List<ComicNumber> numberList = new ArrayList<>();
         String isbn;
-        int numberId;
         String query = "select * from comic_number where collection_id = ?";
 
 
@@ -27,11 +28,10 @@ public class ComicNumberDAO implements IComicNumberDAO{
 
         while (resultSet.next()){
             isbn = resultSet.getString(1);
-            numberId = resultSet.getInt(2);
 
-            numberList.add(new ComicNumber(isbn, numberId, resultSet.getString(5),
+            numberList.add(new ComicNumber(isbn, resultSet.getInt(2), resultSet.getString(5),
                     resultSet.getString(3),
-                    NumberCopiesManagement.getNumberCopiesQuantity(connection, isbn, numberId),
+                    NumberCopiesManagement.getNumberCopiesQuantity(connection, isbn),
                     resultSet.getInt(4)));
         }
 
@@ -39,5 +39,54 @@ public class ComicNumberDAO implements IComicNumberDAO{
         resultSet.close();
 
         return numberList;
+    }
+
+    @Override
+    public boolean existsNumber(Connection connection, String isbn) throws SQLException {
+        String query = "select isbn from comic_number where isbn = ?";
+        boolean result = false;
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, isbn);
+        ResultSet resultSet = statement.executeQuery();
+
+        if(resultSet.next()){
+            result = true;
+        }
+
+        resultSet.close();
+        statement.close();
+
+        return result;
+    }
+
+    @Override
+    public ComicNumber getComicNumber(Connection connection, String isbn) throws SQLException, IOException {
+        ComicNumber comicNumber = null;
+        InputStream aux;
+        byte[] image;
+        String query = "select * from comic_number where isbn = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, isbn);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if(resultSet.next()){
+            aux = resultSet.getBinaryStream(6);
+            comicNumber = new ComicNumber(resultSet.getString(1), resultSet.getInt(2),
+                    resultSet.getString(3), resultSet.getInt(4), resultSet.getString(5),
+                    resultSet.getString(7));
+
+            if(aux != null){
+                image = aux.readAllBytes();
+                comicNumber.setImage(image);
+            }
+        }
+
+        resultSet.close();
+        statement.close();
+
+        return comicNumber;
     }
 }

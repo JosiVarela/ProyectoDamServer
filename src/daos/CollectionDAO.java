@@ -193,4 +193,24 @@ public class CollectionDAO implements ICollectionDAO {
 
         statement.executeUpdate();
     }
+
+    @Override
+    public String getCollectionName(Connection connection, int colId) throws SQLException {
+        String result = null;
+        String query = "select title from comic_collection where id_col = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, colId);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if(resultSet.next()){
+            result = resultSet.getString(1);
+        }
+
+        resultSet.close();
+        statement.close();
+
+        return result;
+    }
 }

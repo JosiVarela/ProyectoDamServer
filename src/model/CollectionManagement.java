@@ -46,4 +46,8 @@ public class CollectionManagement {
     public static void deleteCollection(Connection connection, int id) throws SQLException {
         new CollectionDAO().deleteCollection(connection, id);
     }
+
+    public static String getCollectionName(Connection connection, int idCol) throws SQLException {
+        return new CollectionDAO().getCollectionName(connection, idCol);
+    }
 }
