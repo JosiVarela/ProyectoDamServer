@@ -1,12 +1,10 @@
 package controller;
 
+import model.CollectionManagement;
 import model.NumberManagement;
 import model.entities.ComicNumber;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.sql.SQLException;
 
@@ -84,6 +82,46 @@ public class NumberController {
             throw new RuntimeException(e);
         } finally {
             try {
+                DBConnection.getConnection().close();
+            } catch (SQLException e) {
+            }
+        }
+    }
+
+    public static void insertComicNumber(Socket socket){
+        ObjectInputStream objectInputStream;
+        DataOutputStream dataOutputStream;
+        ComicNumber comicNumber;
+        try{
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
+            comicNumber = (ComicNumber) objectInputStream.readObject();
+
+            DBConnection.connect();
+            NumberManagement.insertComicNumber(DBConnection.getConnection(), comicNumber);
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("OK");
+
+        } catch (IOException e) {
+            try {
+                DBConnection.getConnection().rollback();
+            } catch (SQLException ex) {
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeUTF("SQLE Error");
+            } catch (IOException ex) {
+            }
+            try {
+                DBConnection.getConnection().rollback();
+            } catch (SQLException ex) {
+            }
+        }finally {
+            try {
+                DBConnection.getConnection().commit();
                 DBConnection.getConnection().close();
             } catch (SQLException e) {
             }

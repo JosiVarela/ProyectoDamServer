@@ -20,4 +20,8 @@ public class NumberManagement {
     public static ComicNumber getComicNumber(Connection connection, String isbn) throws SQLException, IOException {
         return new ComicNumberDAO().getComicNumber(connection, isbn);
     }
+
+    public static void insertComicNumber(Connection connection, ComicNumber comicNumber) throws SQLException {
+        new ComicNumberDAO().insertNumber(connection, comicNumber);
+    }
 }

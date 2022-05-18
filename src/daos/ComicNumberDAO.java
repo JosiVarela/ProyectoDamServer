@@ -3,6 +3,7 @@ package daos;
 import model.entities.ComicNumber;
 import model.NumberCopiesManagement;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -88,5 +89,27 @@ public class ComicNumberDAO implements IComicNumberDAO{
         statement.close();
 
         return comicNumber;
+    }
+
+    @Override
+    public void insertNumber(Connection connection, ComicNumber comicNumber) throws SQLException {
+        String query = "insert into comic_number values(?,?,?,?,?,?,?)";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setString(1, comicNumber.getIsbn());
+        statement.setInt(2, comicNumber.getComicNumber());
+        statement.setString(3, comicNumber.getCover());
+        statement.setInt(4, comicNumber.getColId());
+        statement.setString(5, comicNumber.getName());
+        statement.setString(7, comicNumber.getArgument());
+
+        if(comicNumber.getImage() != null){
+            statement.setBinaryStream(6, new ByteArrayInputStream(comicNumber.getImage()));
+        }else{
+            statement.setBinaryStream(6, null);
+        }
+
+        statement.executeUpdate();
     }
 }

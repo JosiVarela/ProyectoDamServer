@@ -1,5 +1,7 @@
 package controller;
 
+import model.NumberManagement;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -41,6 +43,7 @@ public class ServerProcessor extends Thread{
                     //COMIC NUBERS MANAGEMENT
                     case "existsComicNumber" -> NumberController.existsNumber(socket);
                     case "getComicNumber" -> NumberController.getComicNumber(socket);
+                    case "insertComicNumber" -> NumberController.insertComicNumber(socket);
                     //SERVER MANAGEMENT
                     case "ping" -> ping(socket);
                     case "disconnect" -> running = false;
