@@ -24,4 +24,8 @@ public class NumberManagement {
     public static void insertComicNumber(Connection connection, ComicNumber comicNumber) throws SQLException {
         new ComicNumberDAO().insertNumber(connection, comicNumber);
     }
+
+    public static void updateComicNumber(Connection connection, ComicNumber comicNumber) throws SQLException {
+        new ComicNumberDAO().updateNumber(connection, comicNumber);
+    }
 }

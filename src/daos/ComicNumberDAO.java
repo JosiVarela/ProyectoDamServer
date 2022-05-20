@@ -112,4 +112,27 @@ public class ComicNumberDAO implements IComicNumberDAO{
 
         statement.executeUpdate();
     }
+
+    @Override
+    public void updateNumber(Connection connection, ComicNumber comicNumber) throws SQLException {
+        String query = "update comic_number set cnumber = ?, cover = ?, cname = ?, image = ?, argument = ? where isbn = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+
+        statement.setInt(1, comicNumber.getComicNumber());
+        statement.setString(2, comicNumber.getCover());
+        statement.setString(3, comicNumber.getName());
+
+        if(comicNumber.getImage() != null){
+            statement.setBinaryStream(4, new ByteArrayInputStream(comicNumber.getImage()));
+        }else{
+            statement.setBinaryStream(4, null);
+        }
+
+        statement.setString(5, comicNumber.getArgument());
+        statement.setString(6, comicNumber.getIsbn());
+
+        statement.executeUpdate();
+    }
 }

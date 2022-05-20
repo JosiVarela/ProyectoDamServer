@@ -44,6 +44,7 @@ public class ServerProcessor extends Thread{
                     case "existsComicNumber" -> NumberController.existsNumber(socket);
                     case "getComicNumber" -> NumberController.getComicNumber(socket);
                     case "insertComicNumber" -> NumberController.insertComicNumber(socket);
+                    case "updateComicNumber" -> NumberController.updateComicNumber(socket);
                     //SERVER MANAGEMENT
                     case "ping" -> ping(socket);
                     case "disconnect" -> running = false;

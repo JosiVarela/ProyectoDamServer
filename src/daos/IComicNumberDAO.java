@@ -12,4 +12,5 @@ public interface IComicNumberDAO {
     boolean existsNumber(Connection connection, String isbn) throws SQLException;
     ComicNumber getComicNumber(Connection connection, String isbn) throws SQLException, IOException;
     void insertNumber(Connection connection, ComicNumber comicNumber) throws SQLException;
+    void updateNumber(Connection connection, ComicNumber comicNumber) throws SQLException;
 }
