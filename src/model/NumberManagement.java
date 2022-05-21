@@ -13,6 +13,10 @@ public class NumberManagement {
         return new ComicNumberDAO().getComicNumberListByColId(connection, colId);
     }
 
+    public static List<ComicNumber> getComicNumbers(Connection connection) throws SQLException {
+        return new ComicNumberDAO().getComicNumbers(connection);
+    }
+
     public static boolean existsNumber(Connection connection, String isbn) throws SQLException {
         return new ComicNumberDAO().existsNumber(connection,isbn);
     }

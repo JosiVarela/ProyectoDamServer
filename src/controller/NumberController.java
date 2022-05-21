@@ -7,6 +7,7 @@ import model.entities.ComicNumber;
 import java.io.*;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.List;
 
 public class NumberController {
     public static void existsNumber(Socket socket){
@@ -85,6 +86,34 @@ public class NumberController {
                 DBConnection.getConnection().close();
             } catch (SQLException e) {
             }
+        }
+    }
+
+    public static void getComicNumbers(Socket socket){
+        List<ComicNumber> comicNumbers;
+        DataOutputStream dataOutputStream;
+        ObjectOutputStream objectOutputStream;
+
+        try{
+            DBConnection.connect();
+            comicNumbers = NumberManagement.getComicNumbers(DBConnection.getConnection());
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("OK");
+
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectOutputStream.writeObject(comicNumbers);
+            objectOutputStream.flush();
+
+        } catch (SQLException e) {
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeUTF("SQLE Error");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

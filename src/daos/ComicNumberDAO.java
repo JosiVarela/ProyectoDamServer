@@ -6,10 +6,7 @@ import model.NumberCopiesManagement;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +37,25 @@ public class ComicNumberDAO implements IComicNumberDAO{
         resultSet.close();
 
         return numberList;
+    }
+
+    @Override
+    public List<ComicNumber> getComicNumbers(Connection connection) throws SQLException {
+        List<ComicNumber> comicNumbers = new ArrayList<>();
+        String query = "select cname from comic_number";
+
+        Statement statement = connection.createStatement();
+
+        ResultSet resultSet = statement.executeQuery(query);
+
+        while(resultSet.next()){
+            comicNumbers.add(new ComicNumber(resultSet.getString(1)));
+        }
+
+        resultSet.close();
+        statement.close();
+
+        return comicNumbers;
     }
 
     @Override
