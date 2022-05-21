@@ -6,7 +6,7 @@ import java.io.*;
 import java.net.Socket;
 
 public class ServerProcessor extends Thread{
-    private Socket socket;
+    private final Socket socket;
 
     public ServerProcessor(Socket socket) {
         this.socket = socket;
@@ -17,10 +17,6 @@ public class ServerProcessor extends Thread{
         boolean running = true;
         String option;
         DataInputStream dataInput;
-        DataOutputStream dataOutput = null;
-        ObjectInputStream objectInput;
-        ObjectOutputStream objectOutput;
-
 
         try {
             do{
@@ -45,6 +41,7 @@ public class ServerProcessor extends Thread{
                     case "getComicNumber" -> NumberController.getComicNumber(socket);
                     case "insertComicNumber" -> NumberController.insertComicNumber(socket);
                     case "updateComicNumber" -> NumberController.updateComicNumber(socket);
+                    case "deleteComicNumber" -> NumberController.deleteComicNumber(socket);
                     //SERVER MANAGEMENT
                     case "ping" -> ping(socket);
                     case "disconnect" -> running = false;
@@ -61,15 +58,6 @@ public class ServerProcessor extends Thread{
         try {
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataOutputStream.writeUTF("pong");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void sayGoodbye(DataOutputStream dataOutputStream, Socket socket){
-        try {
-            dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            dataOutputStream.writeUTF("Adios mundo");
         } catch (IOException e) {
             e.printStackTrace();
         }

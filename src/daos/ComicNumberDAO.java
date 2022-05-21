@@ -111,6 +111,8 @@ public class ComicNumberDAO implements IComicNumberDAO{
         }
 
         statement.executeUpdate();
+
+        statement.close();
     }
 
     @Override
@@ -134,5 +136,20 @@ public class ComicNumberDAO implements IComicNumberDAO{
         statement.setString(6, comicNumber.getIsbn());
 
         statement.executeUpdate();
+
+        statement.close();
+    }
+
+    @Override
+    public void deleteNumber(Connection connection, String isbn) throws SQLException {
+        String query = "delete from comic_number where isbn = ?";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setString(1, isbn);
+
+        statement.executeUpdate();
+
+        statement.close();
     }
 }

@@ -167,4 +167,42 @@ public class NumberController {
             }
         }
     }
+
+    public static void deleteComicNumber(Socket socket){
+        DataInputStream dataInputStream;
+        DataOutputStream dataOutputStream;
+        String isbn;
+        try{
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            isbn = dataInputStream.readUTF();
+
+            DBConnection.connect();
+            NumberManagement.deleteComicNumber(DBConnection.getConnection(), isbn);
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("OK");
+
+        } catch (IOException e) {
+            try {
+                DBConnection.getConnection().rollback();
+            } catch (SQLException ex) {
+            }
+        } catch (SQLException e) {
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeUTF("SQLE Error");
+            } catch (IOException ex) {
+            }
+            try {
+                DBConnection.getConnection().rollback();
+            } catch (SQLException ex) {
+            }
+        }finally {
+            try {
+                DBConnection.getConnection().commit();
+                DBConnection.getConnection().close();
+            } catch (SQLException e) {
+            }
+        }
+    }
 }

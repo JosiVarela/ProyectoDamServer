@@ -28,4 +28,8 @@ public class NumberManagement {
     public static void updateComicNumber(Connection connection, ComicNumber comicNumber) throws SQLException {
         new ComicNumberDAO().updateNumber(connection, comicNumber);
     }
+
+    public static void deleteComicNumber(Connection connection, String isbn) throws SQLException {
+        new ComicNumberDAO().deleteNumber(connection, isbn);
+    }
 }
