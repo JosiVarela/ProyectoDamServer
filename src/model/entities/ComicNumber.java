@@ -1,16 +1,18 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class ComicNumber implements Serializable {
-    String isbn;
-    int comicNumber;
-    String name;
-    String cover;
-    String argument;
-    int copies;
-    int colId;
-    byte[] image;
+    private String isbn;
+    private int comicNumber;
+    private String name;
+    private String cover;
+    private String argument;
+    private int copies;
+    private int colId;
+    private byte[] image;
+    private List<ComicCopy> comicCopyList;
 
     public ComicNumber() {
     }
@@ -99,5 +101,13 @@ public class ComicNumber implements Serializable {
 
     public void setArgument(String argument) {
         this.argument = argument;
+    }
+
+    public List<ComicCopy> getComicCopyList() {
+        return comicCopyList;
+    }
+
+    public void setComicCopyList(List<ComicCopy> comicCopyList) {
+        this.comicCopyList = comicCopyList;
     }
 }

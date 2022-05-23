@@ -1,6 +1,7 @@
 package controller;
 
 import model.CollectionManagement;
+import model.NumberCopiesManagement;
 import model.NumberManagement;
 import model.entities.ComicNumber;
 
@@ -58,6 +59,8 @@ public class NumberController {
             try{
                 DBConnection.connect();
                 comicNumber = NumberManagement.getComicNumber(DBConnection.getConnection(), isbn);
+                comicNumber.setComicCopyList(NumberCopiesManagement.getComicCopiesList(DBConnection.getConnection(),
+                        comicNumber.getIsbn()));
             } catch (SQLException e) {
                 try {
                     dataOutputStream = new DataOutputStream(socket.getOutputStream());
