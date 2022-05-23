@@ -65,7 +65,7 @@ public class NumberCopiesDAO implements INumberCopiesDAO{
     }
 
     @Override
-    public void updateCopie(Connection connection, ComicCopy comicCopy) throws SQLException {
+    public void updateCopy(Connection connection, ComicCopy comicCopy) throws SQLException {
         String query = "update number_copies set purchase_date = ?, state = ?, observations = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
@@ -109,5 +109,27 @@ public class NumberCopiesDAO implements INumberCopiesDAO{
         statement.close();
 
         return comicCopyList;
+    }
+
+    @Override
+    public ComicCopy getComicCopy(Connection connection, int id) throws SQLException {
+        String query = "select * from number_copies where id = ?";
+        ComicCopy comicCopy = null;
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if(resultSet.next()){
+            comicCopy = new ComicCopy(id, resultSet.getDate(2).toLocalDate(), resultSet.getInt(3),
+                    resultSet.getString(5), resultSet.getString(4));
+        }
+
+        resultSet.close();
+        statement.close();aaaa
+
+        return  comicCopy;
     }
 }

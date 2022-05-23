@@ -44,6 +44,10 @@ public class ServerProcessor extends Thread{
                     case "deleteComicNumber" -> NumberController.deleteComicNumber(socket);
                     case "getComicNumbers" -> NumberController.getComicNumbers(socket);
                     // COMIC COPIES MANAGEMENT
+                    case "insertCopy" -> CopyController.insertCopy(socket);
+                    case "updateCopy" -> CopyController.updateCopy(socket);
+                    case "deleteCopy" -> CopyController.deleteCopy(socket);
+                    case "existsCopy" -> CopyController.existsCopy(socket);
                     //SERVER MANAGEMENT
                     case "ping" -> ping(socket);
                     case "disconnect" -> running = false;
