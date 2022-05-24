@@ -3,10 +3,7 @@ package controller;
 import model.NumberCopiesManagement;
 import model.entities.ComicCopy;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.Socket;
 import java.sql.SQLException;
 
@@ -149,6 +146,43 @@ public class CopyController {
         }finally {
             try {
                 DBConnection.getConnection().commit();
+                DBConnection.getConnection().close();
+            } catch (SQLException e) {
+            }
+        }
+    }
+
+    public static void getComicCopy(Socket socket){
+        DataOutputStream dataOutputStream;
+        ObjectOutputStream objectOutputStream;
+        DataInputStream dataInputStream;
+        int copyId;
+        ComicCopy comicCopy;
+
+        try{
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            copyId = dataInputStream.readInt();
+
+            DBConnection.connect();
+            comicCopy = NumberCopiesManagement.getComicCopy(DBConnection.getConnection(), copyId);
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("OK");
+
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectOutputStream.writeObject(comicCopy);
+            objectOutputStream.flush();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeUTF("SQLE Error");
+            } catch (IOException ex) {
+            }
+        }finally {
+            try {
                 DBConnection.getConnection().close();
             } catch (SQLException e) {
             }

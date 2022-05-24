@@ -66,13 +66,14 @@ public class NumberCopiesDAO implements INumberCopiesDAO{
 
     @Override
     public void updateCopy(Connection connection, ComicCopy comicCopy) throws SQLException {
-        String query = "update number_copies set purchase_date = ?, state = ?, observations = ?";
+        String query = "update number_copies set purchase_date = ?, state = ?, observations = ? where id = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
 
         statement.setDate(1, Date.valueOf(comicCopy.getPurchaseDate()));
         statement.setInt(2, comicCopy.getState());
-        statement.setString(4, comicCopy.getObservations());
+        statement.setString(3, comicCopy.getObservations());
+        statement.setInt(4, comicCopy.getIdCopy());
 
         statement.executeUpdate();
     }
@@ -128,7 +129,7 @@ public class NumberCopiesDAO implements INumberCopiesDAO{
         }
 
         resultSet.close();
-        statement.close();aaaa
+        statement.close();
 
         return  comicCopy;
     }

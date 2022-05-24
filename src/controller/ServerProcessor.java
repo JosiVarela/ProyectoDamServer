@@ -48,6 +48,7 @@ public class ServerProcessor extends Thread{
                     case "updateCopy" -> CopyController.updateCopy(socket);
                     case "deleteCopy" -> CopyController.deleteCopy(socket);
                     case "existsCopy" -> CopyController.existsCopy(socket);
+                    case "getComicCopy" -> CopyController.getComicCopy(socket);
                     //SERVER MANAGEMENT
                     case "ping" -> ping(socket);
                     case "disconnect" -> running = false;

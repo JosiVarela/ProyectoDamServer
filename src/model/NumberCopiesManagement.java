@@ -31,4 +31,8 @@ public class NumberCopiesManagement {
     public static void deleteCopy(Connection connection, int id) throws SQLException {
         new NumberCopiesDAO().deleteCopie(connection, id);
     }
+
+    public static ComicCopy getComicCopy(Connection connection, int id) throws SQLException {
+        return new NumberCopiesDAO().getComicCopy(connection, id);
+    }
 }
