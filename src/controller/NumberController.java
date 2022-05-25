@@ -220,10 +220,15 @@ public class NumberController {
             } catch (SQLException ex) {
             }
         } catch (SQLException e) {
+            int errorCode = e.getErrorCode();
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
-                dataOutputStream.writeUTF("SQLE Error");
-            } catch (IOException ex) {
+                if (errorCode == 1451) {
+                    dataOutputStream.writeUTF("SQLE Foreing");
+                } else {
+                    dataOutputStream.writeUTF("SQLE Error");
+                }
+            }catch (IOException ex){
             }
             try {
                 DBConnection.getConnection().rollback();
