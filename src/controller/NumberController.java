@@ -3,11 +3,13 @@ package controller;
 import model.CollectionManagement;
 import model.NumberCopiesManagement;
 import model.NumberManagement;
+import model.entities.Collection;
 import model.entities.ComicNumber;
 
 import java.io.*;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NumberController {
@@ -240,6 +242,42 @@ public class NumberController {
                 DBConnection.getConnection().close();
             } catch (SQLException e) {
             }
+        }
+    }
+
+    public static void getNumberList(Socket socket){
+
+        DataOutputStream dataOutputStream;
+        ObjectOutputStream objectOutputStream;
+        List<ComicNumber> numberList;
+
+        try{
+
+            DBConnection.connect();
+            numberList = NumberManagement.getNumberList(DBConnection.getConnection());
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("OK");
+
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectOutputStream.writeObject(numberList);
+            objectOutputStream.flush();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeUTF("SQLE Error");
+            } catch (IOException ex) {
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try{
+                DBConnection.getConnection().close();
+            } catch (SQLException e) {
+            }
+
         }
     }
 }

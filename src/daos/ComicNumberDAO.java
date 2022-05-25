@@ -40,6 +40,32 @@ public class ComicNumberDAO implements IComicNumberDAO{
     }
 
     @Override
+    public List<ComicNumber> getComicNumberList(Connection connection) throws SQLException {
+        List<ComicNumber> numberList = new ArrayList<>();
+        String isbn;
+        String query = "select * from comic_number";
+
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        while (resultSet.next()){
+            isbn = resultSet.getString(1);
+
+            numberList.add(new ComicNumber(isbn, resultSet.getInt(2), resultSet.getString(5),
+                    resultSet.getString(3),
+                    NumberCopiesManagement.getNumberCopiesQuantity(connection, isbn),
+                    resultSet.getInt(4)));
+        }
+
+        statement.close();
+        resultSet.close();
+
+        return numberList;
+    }
+
+    @Override
     public List<ComicNumber> getComicNumbers(Connection connection) throws SQLException {
         List<ComicNumber> comicNumbers = new ArrayList<>();
         String query = "select cname from comic_number";
