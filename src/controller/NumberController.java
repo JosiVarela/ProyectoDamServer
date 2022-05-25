@@ -280,4 +280,84 @@ public class NumberController {
 
         }
     }
+
+    public static void getNumbersByName(Socket socket){
+        DataOutputStream dataOutputStream;
+        ObjectOutputStream objectOutputStream;
+        DataInputStream dataInputStream;
+        List<ComicNumber> numberList;
+        String name;
+
+        try{
+
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            name = dataInputStream.readUTF();
+
+            DBConnection.connect();
+            numberList = NumberManagement.getNumbersByName(DBConnection.getConnection(), name);
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("OK");
+
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectOutputStream.writeObject(numberList);
+            objectOutputStream.flush();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeUTF("SQLE Error");
+            } catch (IOException ex) {
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try{
+                DBConnection.getConnection().close();
+            } catch (SQLException e) {
+            }
+
+        }
+    }
+
+    public static void getNumbersByColName(Socket socket){
+        DataOutputStream dataOutputStream;
+        ObjectOutputStream objectOutputStream;
+        DataInputStream dataInputStream;
+        List<ComicNumber> numberList;
+        String name;
+
+        try{
+
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            name = dataInputStream.readUTF();
+
+            DBConnection.connect();
+            numberList = NumberManagement.getNumbersByColName(DBConnection.getConnection(), name);
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("OK");
+
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectOutputStream.writeObject(numberList);
+            objectOutputStream.flush();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeUTF("SQLE Error");
+            } catch (IOException ex) {
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try{
+                DBConnection.getConnection().close();
+            } catch (SQLException e) {
+            }
+
+        }
+    }
 }

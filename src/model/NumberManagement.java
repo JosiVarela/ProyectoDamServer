@@ -21,6 +21,14 @@ public class NumberManagement {
         return new ComicNumberDAO().getComicNumbers(connection);
     }
 
+    public static List<ComicNumber> getNumbersByName(Connection connection, String name) throws SQLException {
+        return new ComicNumberDAO().getNumbersByName(connection, name);
+    }
+
+    public static List<ComicNumber> getNumbersByColName(Connection connection, String name) throws SQLException {
+        return new ComicNumberDAO().getNumbersByColName(connection, name);
+    }
+
     public static boolean existsNumber(Connection connection, String isbn) throws SQLException {
         return new ComicNumberDAO().existsNumber(connection,isbn);
     }

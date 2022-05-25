@@ -85,6 +85,64 @@ public class ComicNumberDAO implements IComicNumberDAO{
     }
 
     @Override
+    public List<ComicNumber> getNumbersByName(Connection connection, String name) throws SQLException {
+        List<ComicNumber> numberList = new ArrayList<>();
+        String isbn;
+        String query = "select * from comic_number where cname like(?)";
+
+        name = "%" + name + "%";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setString(1, name);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        while (resultSet.next()){
+            isbn = resultSet.getString(1);
+
+            numberList.add(new ComicNumber(isbn, resultSet.getInt(2), resultSet.getString(5),
+                    resultSet.getString(3),
+                    NumberCopiesManagement.getNumberCopiesQuantity(connection, isbn),
+                    resultSet.getInt(4)));
+        }
+
+        statement.close();
+        resultSet.close();
+
+        return numberList;
+    }
+
+    @Override
+    public List<ComicNumber> getNumbersByColName(Connection connection, String name) throws SQLException {
+        List<ComicNumber> numberList = new ArrayList<>();
+        String isbn;
+        String query = "select c.isbn, c.cnumber, c.cover, c.collection_id, c.cname, c.image, c.argument " +
+                "from comic_number as c inner join comic_collection on c.collection_id = " +
+                "comic_collection.id_col where comic_collection.title like(?)";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setString(1, "%" + name + "%");
+
+        ResultSet resultSet = statement.executeQuery();
+
+        while (resultSet.next()){
+            isbn = resultSet.getString(1);
+
+            numberList.add(new ComicNumber(isbn, resultSet.getInt(2), resultSet.getString(5),
+                    resultSet.getString(3),
+                    NumberCopiesManagement.getNumberCopiesQuantity(connection, isbn),
+                    resultSet.getInt(4)));
+        }
+
+        statement.close();
+        resultSet.close();
+
+        return numberList;
+    }
+
+    @Override
     public boolean existsNumber(Connection connection, String isbn) throws SQLException {
         String query = "select isbn from comic_number where isbn = ?";
         boolean result = false;
