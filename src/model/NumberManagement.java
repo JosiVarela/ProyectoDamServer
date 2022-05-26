@@ -25,6 +25,10 @@ public class NumberManagement {
         return new ComicNumberDAO().getNumbersByName(connection, name);
     }
 
+    public static List<ComicNumber> getNumbersByNameCol(Connection connection, String name, int idCol) throws SQLException {
+        return new ComicNumberDAO().getNumbersByNameCol(connection, name, idCol);
+    }
+
     public static List<ComicNumber> getNumbersByColName(Connection connection, String name) throws SQLException {
         return new ComicNumberDAO().getNumbersByColName(connection, name);
     }

@@ -321,6 +321,50 @@ public class NumberController {
         }
     }
 
+    public static void getNumbersByNameCol(Socket socket){
+        DataOutputStream dataOutputStream;
+        ObjectOutputStream objectOutputStream;
+        DataInputStream dataInputStream;
+        List<ComicNumber> numberList;
+        String name;
+        int idCol;
+
+        try{
+
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            name = dataInputStream.readUTF();
+
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            idCol = dataInputStream.readInt();
+
+            DBConnection.connect();
+            numberList = NumberManagement.getNumbersByNameCol(DBConnection.getConnection(), name, idCol);
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("OK");
+
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectOutputStream.writeObject(numberList);
+            objectOutputStream.flush();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeUTF("SQLE Error");
+            } catch (IOException ex) {
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try{
+                DBConnection.getConnection().close();
+            } catch (SQLException e) {
+            }
+
+        }
+    }
+
     public static void getNumbersByColName(Socket socket){
         DataOutputStream dataOutputStream;
         ObjectOutputStream objectOutputStream;

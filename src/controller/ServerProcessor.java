@@ -46,6 +46,7 @@ public class ServerProcessor extends Thread{
                     case "getComicNumberList" -> NumberController.getNumberList(socket);
                     case "getNumbersByName" -> NumberController.getNumbersByName(socket);
                     case "getNumbersByColName" -> NumberController.getNumbersByColName(socket);
+                    case "getNumbersByNameCol" -> NumberController.getNumbersByNameCol(socket);
                     // COMIC COPIES MANAGEMENT
                     case "insertCopy" -> CopyController.insertCopy(socket);
                     case "updateCopy" -> CopyController.updateCopy(socket);

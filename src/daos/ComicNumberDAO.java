@@ -143,6 +143,36 @@ public class ComicNumberDAO implements IComicNumberDAO{
     }
 
     @Override
+    public List<ComicNumber> getNumbersByNameCol(Connection connection, String name, int colId) throws SQLException {
+        List<ComicNumber> numberList = new ArrayList<>();
+        String isbn;
+        String query = "select * from comic_number where cname like(?) and collection_id = ?";
+
+        name = "%" + name + "%";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setString(1, name);
+        statement.setInt(2, colId);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        while (resultSet.next()){
+            isbn = resultSet.getString(1);
+
+            numberList.add(new ComicNumber(isbn, resultSet.getInt(2), resultSet.getString(5),
+                    resultSet.getString(3),
+                    NumberCopiesManagement.getNumberCopiesQuantity(connection, isbn),
+                    resultSet.getInt(4)));
+        }
+
+        statement.close();
+        resultSet.close();
+
+        return numberList;
+    }
+
+    @Override
     public boolean existsNumber(Connection connection, String isbn) throws SQLException {
         String query = "select isbn from comic_number where isbn = ?";
         boolean result = false;
