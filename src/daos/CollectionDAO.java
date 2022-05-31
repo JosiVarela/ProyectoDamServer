@@ -1,7 +1,5 @@
 package daos;
 
-import controller.DBConnection;
-import data.MockData;
 import model.entities.Collection;
 
 import java.sql.*;
@@ -158,26 +156,25 @@ public class CollectionDAO implements ICollectionDAO {
 
     @Override
     public void updateCollection(Connection connection, Collection collection) throws SQLException {
-        String query = "update comic_collection set title = ?, first_publish = ?, argument = ? where id_col = ?";
+        String query = "update comic_collection set title = ?, argument = ? where id_col = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
 
         statement.setString(1, collection.getTitle());
-        statement.setDate(2, Date.valueOf(collection.getPublishDate()));
-        statement.setString(3, collection.getArgument());
-        statement.setInt(4, collection.getId());
+        statement.setString(2, collection.getArgument());
+        statement.setInt(3, collection.getId());
 
         statement.executeUpdate();
     }
 
     @Override
     public void insertCollection(Connection connection, Collection collection) throws SQLException {
-        String query = "insert into comic_collection(title, first_publish, argument) values (?, ?, ?)";
+        String query = "insert into comic_collection(title, creation_date, argument) values (?, ?, ?)";
 
         PreparedStatement statement = connection.prepareStatement(query);
 
         statement.setString(1, collection.getTitle());
-        statement.setDate(2, Date.valueOf(collection.getPublishDate()));
+        statement.setDate(2, Date.valueOf(collection.getCreationDate()));
         statement.setString(3, collection.getArgument());
 
         statement.executeUpdate();
