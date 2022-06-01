@@ -84,7 +84,7 @@ group by comic_number.isbn]]>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<imageExpression><![CDATA["./images/libraryLogo.png"]]></imageExpression>
+				<imageExpression><![CDATA["./reports/images/libraryLogo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="210" y="60" width="100" height="19" uuid="ca87d8b7-8c2f-47c0-b00b-6ec25fc31efd"/>
@@ -138,7 +138,7 @@ group by comic_number.isbn]]>
 			</staticText>
 			<image>
 				<reportElement x="0" y="10" width="79" height="113" uuid="870a0260-63d5-4053-80f3-7f103812d4ae"/>
-				<imageExpression><![CDATA[$F{image} != null ? $F{image} : "./images/noImage.png"]]></imageExpression>
+				<imageExpression><![CDATA[$F{image} != null ? $F{image} : "./reports/images/noImage.png"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement positionType="Float" x="90" y="40" width="230" height="30" uuid="8dc59e5f-9f85-4642-a61a-9f7aaf08907e">
