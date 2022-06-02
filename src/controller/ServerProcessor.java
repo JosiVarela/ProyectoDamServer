@@ -57,6 +57,7 @@ public class ServerProcessor extends Thread{
                     case "getCollectionReport" -> ReportController.getCollectionReport(socket);
                     case "getCollectionReportByName" -> ReportController.getCollectionReportByName(socket);
                     case "getNumbersReportByName" -> ReportController.getNumbersReportByName(socket);
+                    case "getNumbersReport" -> ReportController.getNumbersReport(socket);
                     //SERVER MANAGEMENT
                     case "ping" -> ping(socket);
                     case "disconnect" -> running = false;
