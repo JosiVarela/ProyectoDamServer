@@ -150,11 +150,11 @@ on comic_number.isbn = number_copies.isbn]]>
 				<textFieldExpression><![CDATA["<b>Estado: </b>" + ($F{state} == 0 ? "Nuevo" : $F{state} == 1 ? "Como Nuevo" : $F{state} == 2  ?  "Aceptable" : "Malo")]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" x="0" y="130" width="280" height="30" uuid="edd72a9a-5d90-4642-8358-abf756d318a8">
+				<reportElement positionType="Float" x="0" y="130" width="110" height="30" uuid="edd72a9a-5d90-4642-8358-abf756d318a8">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6f623695-f1b3-4ae0-b2a5-a1b9f035a9e5"/>
 				</reportElement>
 				<textElement markup="html"/>
-				<textFieldExpression><![CDATA["<b>Fecha de compra: </b>" + DATEFORMAT($F{purchase_date},"dd-MM-yyyy")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<b>Fecha de compra: </b>"]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
 				<reportElement positionType="Float" x="0" y="160" width="550" height="30" uuid="506e7030-1341-4685-bd48-46ba66fdeb54">
@@ -162,6 +162,14 @@ on comic_number.isbn = number_copies.isbn]]>
 				</reportElement>
 				<textElement markup="html"/>
 				<textFieldExpression><![CDATA["<b>Observaciones: </b>" + $F{observations}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="110" y="130" width="130" height="30" uuid="ee1080e1-eff0-4ec3-8f96-7f458117e79c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6f623695-f1b3-4ae0-b2a5-a1b9f035a9e5"/>
+				</reportElement>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA[$F{purchase_date}]]></textFieldExpression>
+				<patternExpression><![CDATA["dd-MM-yyyy"]]></patternExpression>
 			</textField>
 		</band>
 	</detail>
