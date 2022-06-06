@@ -50,7 +50,7 @@ group by comic_number.isbn]]>
 		<property name="com.jaspersoft.studio.field.label" value="num_copies"/>
 	</field>
 	<title>
-		<band height="102">
+		<band height="107">
 			<staticText>
 				<reportElement key="" x="210" y="0" width="120" height="20" uuid="9fe1ea05-b146-4f2e-97ae-f64b790d663a"/>
 				<textElement>
@@ -116,16 +116,9 @@ group by comic_number.isbn]]>
 		<band height="23" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="216" splitType="Stretch">
-			<staticText>
-				<reportElement positionType="Float" x="0" y="214" width="550" height="2" uuid="969240e1-f851-4035-a655-6ceb869dec70"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-				</box>
-				<text><![CDATA[]]></text>
-			</staticText>
+		<band height="238">
 			<image>
-				<reportElement x="0" y="10" width="79" height="113" uuid="870a0260-63d5-4053-80f3-7f103812d4ae"/>
+				<reportElement positionType="Float" x="0" y="10" width="79" height="113" uuid="870a0260-63d5-4053-80f3-7f103812d4ae"/>
 				<imageExpression><![CDATA[$F{image} != null ? $F{image} : "./reports/images/noImage.png"]]></imageExpression>
 			</image>
 			<textField>
@@ -136,14 +129,14 @@ group by comic_number.isbn]]>
 				<textFieldExpression><![CDATA["<b>ISBN: </b>" + $F{isbn}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement stretchType="ContainerHeight" x="90" y="10" width="454" height="30" uuid="5a1c6dac-799d-4a11-ab78-1caa30689f5e">
+				<reportElement positionType="Float" x="90" y="10" width="454" height="30" uuid="5a1c6dac-799d-4a11-ab78-1caa30689f5e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="21d364ac-ad74-49cb-b45c-f58d7d013776"/>
 				</reportElement>
 				<textElement markup="html"/>
 				<textFieldExpression><![CDATA["<b>Nombre: </b>" + $F{cname}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="ContainerHeight" x="0" y="130" width="550" height="30" uuid="d28ef5f5-0890-492e-a90c-34cb2fb71b8e">
+				<reportElement positionType="Float" x="0" y="130" width="550" height="30" uuid="d28ef5f5-0890-492e-a90c-34cb2fb71b8e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6f623695-f1b3-4ae0-b2a5-a1b9f035a9e5"/>
 				</reportElement>
 				<textElement markup="html"/>
@@ -157,7 +150,7 @@ group by comic_number.isbn]]>
 				<textFieldExpression><![CDATA["<b>Número de cómic: </b>" +$F{cnumber} + "	     " + "<b>Tapa: </b>" + ($F{cover} .equals("soft") ? "Blanda" : "Dura")]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="ContainerHeight" x="0" y="180" width="550" height="30" uuid="fa2ba023-e053-4047-9815-25a5c4a1e867">
+				<reportElement positionType="Float" x="0" y="180" width="550" height="30" uuid="fa2ba023-e053-4047-9815-25a5c4a1e867">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e11e9c08-91bd-4c5c-802b-00daae56015a"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{argument}]]></textFieldExpression>
@@ -175,6 +168,13 @@ group by comic_number.isbn]]>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Argumento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="219" width="550" height="2" uuid="fa6e13b9-a526-4793-9758-53bedbdf8e56"/>
+				<box>
+					<bottomPen lineWidth="2.0"/>
+				</box>
+				<text><![CDATA[Static Text]]></text>
 			</staticText>
 		</band>
 	</detail>
