@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GEN_Collections" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="169d2e34-7e5f-4532-9c39-5fd659daae2b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ConexionBD"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="numberName" class="java.lang.String"/>
+	<parameter name="colName" class="java.lang.String"/>
+	<parameter name="inDate" class="java.sql.Date"/>
+	<parameter name="enDate" class="java.sql.Date"/>
+	<queryString>
+		<![CDATA[select comic_number.cname, comic_number.cnumber, comic_number.isbn, comic_collection.title, number_copies.state, number_copies.observations, number_copies.purchase_date
+from comic_number 
+inner join comic_collection 
+on comic_number.collection_id = comic_collection.id_col
+inner join number_copies
+on comic_number.isbn = number_copies.isbn
+where comic_number.cname like '%$P!{numberName}%' 
+and comic_collection.title like '%$P!{colName}%' 
+and number_copies.purchase_date >= $P{inDate} 
+and number_copies.purchase_date <= $P{enDate}]]>
+	</queryString>
+	<field name="cname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cname"/>
+		<property name="com.jaspersoft.studio.field.label" value="cname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="comic_number"/>
+	</field>
+	<field name="cnumber" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cnumber"/>
+		<property name="com.jaspersoft.studio.field.label" value="cnumber"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="comic_number"/>
+	</field>
+	<field name="isbn" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="isbn"/>
+		<property name="com.jaspersoft.studio.field.label" value="isbn"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="comic_number"/>
+	</field>
+	<field name="title" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="title"/>
+		<property name="com.jaspersoft.studio.field.label" value="title"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="comic_collection"/>
+	</field>
+	<field name="state" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="state"/>
+		<property name="com.jaspersoft.studio.field.label" value="state"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="number_copies"/>
+	</field>
+	<field name="observations" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="observations"/>
+		<property name="com.jaspersoft.studio.field.label" value="observations"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="number_copies"/>
+	</field>
+	<field name="purchase_date" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="purchase_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="purchase_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="number_copies"/>
+	</field>
+	<title>
+		<band height="107">
+			<staticText>
+				<reportElement key="" x="210" y="0" width="120" height="20" uuid="9fe1ea05-b146-4f2e-97ae-f64b790d663a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Passeig de Sant Joan 9]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="20" width="100" height="20" uuid="07aac66f-7cf8-4471-b6b5-5f5bc030d05d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[08010 Barcelona]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="41" width="100" height="19" uuid="3a471736-e737-4726-8005-bdbdf11c7c77"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[España]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="200" height="100" uuid="d2f0ff72-19be-4580-981d-7bb09e80ddb0">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA["./reports/images/libraryLogo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="210" y="60" width="100" height="19" uuid="ca87d8b7-8c2f-47c0-b00b-6ec25fc31efd"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tel: 93 244 81 25]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="79" width="100" height="19" uuid="0fc76e5f-b602-4267-8b15-52e84e251cca"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[info@normacomics.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="35" width="195" height="44" uuid="c8ca62a2-c3e8-41d3-adf3-1e892dd5755a"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Informe de Ejemplares (Personalizado)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="100" width="550" height="2" uuid="1690c8b7-284d-4197-befc-74a4730ca5f2"/>
+				<box>
+					<bottomPen lineWidth="2.0"/>
+				</box>
+				<text><![CDATA[Static Text]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="17" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="238">
+			<textField>
+				<reportElement positionType="Float" x="0" y="40" width="320" height="30" uuid="8dc59e5f-9f85-4642-a61a-9f7aaf08907e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c9e24024-b3cd-4e1d-b0f5-db104d65f3f5"/>
+				</reportElement>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA["<b>ISBN: </b>" + $F{isbn}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="0" y="10" width="544" height="30" uuid="5a1c6dac-799d-4a11-ab78-1caa30689f5e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="21d364ac-ad74-49cb-b45c-f58d7d013776"/>
+				</reportElement>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA["<b>Nombre: </b>" + $F{cname}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="0" y="70" width="550" height="30" uuid="d28ef5f5-0890-492e-a90c-34cb2fb71b8e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6f623695-f1b3-4ae0-b2a5-a1b9f035a9e5"/>
+				</reportElement>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA["<b>Colección: </b>" + $F{title}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="-6" y="194" width="550" height="2" uuid="fa6e13b9-a526-4793-9758-53bedbdf8e56"/>
+				<box>
+					<bottomPen lineWidth="2.0"/>
+				</box>
+				<text><![CDATA[Static Text]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="0" y="100" width="280" height="30" uuid="e9760c34-5706-481b-a679-f82a133d3bfb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6f623695-f1b3-4ae0-b2a5-a1b9f035a9e5"/>
+				</reportElement>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA["<b>Estado: </b>" + ($F{state} == 0 ? "Nuevo" : $F{state} == 1 ? "Como Nuevo" : $F{state} == 2  ?  "Aceptable" : "Malo")]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="0" y="130" width="110" height="30" uuid="edd72a9a-5d90-4642-8358-abf756d318a8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6f623695-f1b3-4ae0-b2a5-a1b9f035a9e5"/>
+				</reportElement>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA["<b>Fecha de compra: </b>"]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="0" y="160" width="550" height="30" uuid="506e7030-1341-4685-bd48-46ba66fdeb54">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6f623695-f1b3-4ae0-b2a5-a1b9f035a9e5"/>
+				</reportElement>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA["<b>Observaciones: </b>" + $F{observations}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="110" y="130" width="130" height="30" uuid="ee1080e1-eff0-4ec3-8f96-7f458117e79c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6f623695-f1b3-4ae0-b2a5-a1b9f035a9e5"/>
+				</reportElement>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA[$F{purchase_date}]]></textFieldExpression>
+				<patternExpression><![CDATA["dd-MM-yyyy"]]></patternExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="42">
+			<textField>
+				<reportElement x="0" y="6" width="280" height="30" uuid="dcb8511f-d406-4bf2-ae3b-9742fe8add50"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="280" y="6" width="270" height="30" uuid="0ec215b6-336a-4b0e-bf3e-7d35059e6587"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

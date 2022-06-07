@@ -3,10 +3,7 @@ package controller;
 import net.sf.jasperreports.engine.*;
 import services.Resources;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -225,6 +222,53 @@ public class ReportController {
             }
         } catch (IOException e) {
         }finally {
+            try {
+                DBConnection.getConnection().close();
+            } catch (SQLException e) {
+            }
+        }
+    }
+
+    public static void getCopiesReportFiltered(Socket socket){
+        DataOutputStream dataOutputStream;
+        ObjectOutputStream objectOutputStream;
+        DataInputStream dataInputStream;
+        ObjectInputStream objectInputStream;
+        Map<String, Object> parameters;
+
+        try{
+
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
+            parameters = (Map<String, Object>) objectInputStream.readObject();
+
+            JasperReport report = JasperCompileManager.compileReport(Resources.REPORTS_FOLDER + "PER_Copies.jrxml");
+
+            DBConnection.connect();
+            JasperPrint viewer = JasperFillManager.fillReport(report, parameters, DBConnection.getConnection());
+
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataOutputStream.writeUTF("OK");
+
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectOutputStream.writeObject(viewer);
+            objectOutputStream.flush();
+
+        } catch (JRException e) {
+            e.printStackTrace();
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeUTF("JRE");
+            } catch (IOException ex) {
+            }
+        } catch (SQLException e) {
+            try {
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeUTF("SQLE Error");
+            } catch (IOException ex) {
+            }
+        } catch (IOException e) {
+        } catch (ClassNotFoundException e) {
+        } finally {
             try {
                 DBConnection.getConnection().close();
             } catch (SQLException e) {
