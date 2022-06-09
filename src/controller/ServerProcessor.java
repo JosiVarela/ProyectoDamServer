@@ -67,7 +67,6 @@ public class ServerProcessor extends Thread{
 
             }while(running);
         } catch (IOException e) {
-            e.printStackTrace();
         }
 
     }
