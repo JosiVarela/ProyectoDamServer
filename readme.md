@@ -48,7 +48,7 @@ java -jar LibraryServer.jar
 </p>
 <p>
 Si el servidor se trata de una máquina linux,
-podremos ejecutar el programa haciendo clic sobre
+podremos ejecutar el programa
 desde el script "LinuxStartup.sh" (Nos debemos asegurar
 que el usuario que lo instala tenga permisos de ejecución
 sobre él), o desde la terminal con el comando
