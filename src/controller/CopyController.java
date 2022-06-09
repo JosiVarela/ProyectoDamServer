@@ -22,9 +22,7 @@ public class CopyController {
 
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataOutputStream.writeUTF("OK");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
         } catch (SQLException e) {
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
@@ -33,13 +31,17 @@ public class CopyController {
             }
 
             try {
-                DBConnection.getConnection().rollback();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().rollback();
+                }
             } catch (SQLException ex) {
             }
         }finally {
             try {
-                DBConnection.getConnection().commit();
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().commit();
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }
@@ -71,7 +73,9 @@ public class CopyController {
             } catch (IOException ex) {
             }
             try {
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException ex) {
             }
         }
@@ -100,13 +104,17 @@ public class CopyController {
             }
 
             try {
-                DBConnection.getConnection().rollback();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().rollback();
+                }
             } catch (SQLException ex) {
             }
         }finally {
             try {
-                DBConnection.getConnection().commit();
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().commit();
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }
@@ -135,13 +143,17 @@ public class CopyController {
             }
 
             try {
-                DBConnection.getConnection().rollback();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().rollback();
+                }
             } catch (SQLException ex) {
             }
         }finally {
             try {
-                DBConnection.getConnection().commit();
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().commit();
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }
@@ -177,7 +189,9 @@ public class CopyController {
             }
         }finally {
             try {
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }

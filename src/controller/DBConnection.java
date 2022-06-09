@@ -29,7 +29,7 @@ public class DBConnection {
             connection = DriverManager.getConnection(urlCon, dbUser, dbPassword);
             connection.setAutoCommit(false);
         }catch (ClassNotFoundException ex){
-            ex.printStackTrace();
+            System.out.println("MYSQL DRIVER NOT FOUND");
         }
 
     }

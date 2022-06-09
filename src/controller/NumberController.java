@@ -41,7 +41,9 @@ public class NumberController {
             }
         }finally {
             try {
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }
@@ -87,7 +89,9 @@ public class NumberController {
         } catch (IOException e) {
         } finally {
             try {
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }
@@ -116,6 +120,13 @@ public class NumberController {
             } catch (IOException ex) {
             }
         } catch (IOException e) {
+        }finally {
+            if(DBConnection.getConnection() != null){
+                try {
+                    DBConnection.getConnection().close();
+                } catch (SQLException e) {
+                }
+            }
         }
     }
 
@@ -147,13 +158,17 @@ public class NumberController {
             } catch (IOException ex) {
             }
             try {
-                DBConnection.getConnection().rollback();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().rollback();
+                }
             } catch (SQLException ex) {
             }
         }finally {
             try {
-                DBConnection.getConnection().commit();
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().commit();
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }
@@ -186,13 +201,17 @@ public class NumberController {
             } catch (IOException ex) {
             }
             try {
-                DBConnection.getConnection().rollback();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().rollback();
+                }
             } catch (SQLException ex) {
             }
         }finally {
             try {
-                DBConnection.getConnection().commit();
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().commit();
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }
@@ -229,13 +248,17 @@ public class NumberController {
             }catch (IOException ex){
             }
             try {
-                DBConnection.getConnection().rollback();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().rollback();
+                }
             } catch (SQLException ex) {
             }
         }finally {
             try {
-                DBConnection.getConnection().commit();
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().commit();
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }
@@ -268,7 +291,9 @@ public class NumberController {
         } catch (IOException e) {
         }finally {
             try{
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
 
@@ -298,17 +323,17 @@ public class NumberController {
             objectOutputStream.flush();
 
         } catch (SQLException e) {
-            e.printStackTrace();
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("SQLE Error");
             } catch (IOException ex) {
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
         }finally {
             try{
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
 
@@ -351,7 +376,9 @@ public class NumberController {
             throw new RuntimeException(e);
         }finally {
             try{
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
 
@@ -389,7 +416,9 @@ public class NumberController {
         } catch (IOException e) {
         }finally {
             try{
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
 

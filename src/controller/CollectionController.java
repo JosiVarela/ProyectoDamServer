@@ -18,7 +18,7 @@ public class CollectionController {
         try {
             DBConnection.connect();
             List<Collection> collectionList = CollectionManagement.getCollectionList(DBConnection.getConnection());
-            DBConnection.getConnection().close();
+
 
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
@@ -36,6 +36,13 @@ public class CollectionController {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("SQLE Error");
             } catch (IOException ex) {
+            }
+        }finally {
+            if(DBConnection.getConnection() != null){
+                try {
+                    DBConnection.getConnection().close();
+                } catch (SQLException e) {
+                }
             }
         }
     }
@@ -61,8 +68,6 @@ public class CollectionController {
             collection.setNumberList(NumberManagement.getNumberListByColId(DBConnection.getConnection(),
                     collection.getId()));
 
-            DBConnection.getConnection().close();
-
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataOutputStream.writeUTF("OK");
 
@@ -77,6 +82,13 @@ public class CollectionController {
             } catch (IOException ex) {
             }
         } catch (IOException e) {
+        }finally {
+            if(DBConnection.getConnection() != null){
+                try {
+                    DBConnection.getConnection().close();
+                } catch (SQLException e) {
+                }
+            }
         }
     }
 
@@ -95,8 +107,6 @@ public class CollectionController {
 
             collectionList = CollectionManagement.getCollectionListByName(DBConnection.getConnection(), colName);
 
-            DBConnection.getConnection().close();
-
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataOutputStream.writeUTF("OK");
 
@@ -110,6 +120,13 @@ public class CollectionController {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("SQLE Error");
             } catch (IOException ex) {
+            }
+        }finally {
+            if(DBConnection.getConnection() != null){
+                try {
+                    DBConnection.getConnection().close();
+                } catch (SQLException e) {
+                }
             }
         }
     }
@@ -131,7 +148,6 @@ public class CollectionController {
 
             DBConnection.connect();
             result = CollectionManagement.existsCollectionWithName(DBConnection.getConnection(), id, name);
-            DBConnection.getConnection().close();
 
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataOutputStream.writeUTF("OK");
@@ -148,6 +164,13 @@ public class CollectionController {
 
             } catch (IOException ex) {
             }
+        }finally {
+            if(DBConnection.getConnection() != null){
+                try {
+                    DBConnection.getConnection().close();
+                } catch (SQLException e) {
+                }
+            }
         }
     }
 
@@ -162,7 +185,6 @@ public class CollectionController {
 
             DBConnection.connect();
             result = CollectionManagement.existsCollectionWithName(DBConnection.getConnection(), colName);
-            DBConnection.getConnection().close();
 
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataOutputStream.writeUTF("OK");
@@ -176,6 +198,13 @@ public class CollectionController {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("SQLE Error");
             } catch (IOException ex) {
+            }
+        }finally {
+            if(DBConnection.getConnection() != null){
+                try {
+                    DBConnection.getConnection().close();
+                } catch (SQLException e) {
+                }
             }
         }
     }
@@ -192,7 +221,6 @@ public class CollectionController {
 
             DBConnection.connect();
             result = CollectionManagement.existsCollectionWithId(DBConnection.getConnection(), colId);
-            DBConnection.getConnection().close();
 
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataOutputStream.writeUTF("OK");
@@ -201,12 +229,18 @@ public class CollectionController {
             dataOutputStream.writeBoolean(result);
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
         } catch (SQLException e) {
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("SQLE Error");
             } catch (IOException ex) {
+            }
+        }finally {
+            if(DBConnection.getConnection() != null){
+                try {
+                    DBConnection.getConnection().close();
+                } catch (SQLException e) {
+                }
             }
         }
     }
@@ -228,7 +262,9 @@ public class CollectionController {
 
         } catch (IOException e) {
             try {
-                DBConnection.getConnection().rollback();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().rollback();
+                }
             } catch (SQLException ex) {
             }
         } catch (ClassNotFoundException e) {
@@ -243,10 +279,12 @@ public class CollectionController {
             } catch (SQLException ex) {
             }
         }finally {
-            try {
-                DBConnection.getConnection().commit();
-                DBConnection.getConnection().close();
-            } catch (SQLException e) {
+            if(DBConnection.getConnection() != null){
+                try {
+                    DBConnection.getConnection().commit();
+                    DBConnection.getConnection().close();
+                } catch (SQLException e) {
+                }
             }
         }
     }
@@ -279,13 +317,17 @@ public class CollectionController {
             } catch (IOException ex) {
             }
             try {
-                DBConnection.getConnection().rollback();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().rollback();
+                }
             } catch (SQLException ex) {
             }
         }finally {
             try {
-                DBConnection.getConnection().commit();
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().commit();
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }
@@ -318,7 +360,9 @@ public class CollectionController {
             }catch (IOException ex){
             }
             try {
-                DBConnection.getConnection().rollback();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().rollback();
+                }
             } catch (SQLException ex) {
             }
         } catch (IOException e) {
@@ -328,8 +372,10 @@ public class CollectionController {
             }
         }finally {
             try {
-                DBConnection.getConnection().commit();
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().commit();
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }
@@ -364,7 +410,9 @@ public class CollectionController {
             }
         }finally {
             try {
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }

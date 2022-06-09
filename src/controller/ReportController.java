@@ -42,7 +42,9 @@ public class ReportController {
         } catch (IOException e) {
         }finally {
             try {
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }
@@ -66,7 +68,6 @@ public class ReportController {
             objectOutputStream.flush();
 
         } catch (JRException e) {
-            e.printStackTrace();
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("JRE");
@@ -81,7 +82,9 @@ public class ReportController {
         } catch (IOException e) {
         }finally {
             try {
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }
@@ -128,7 +131,9 @@ public class ReportController {
         } catch (IOException e) {
         }finally {
             try {
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }
@@ -181,7 +186,9 @@ public class ReportController {
         } catch (IOException e) {
         }finally {
             try {
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }
@@ -219,7 +226,9 @@ public class ReportController {
         } catch (IOException e) {
         }finally {
             try {
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }
@@ -261,11 +270,12 @@ public class ReportController {
                 dataOutputStream.writeUTF("SQLE Error");
             } catch (IOException ex) {
             }
-        } catch (IOException e) {
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
         } finally {
             try {
-                DBConnection.getConnection().close();
+                if(DBConnection.getConnection() != null){
+                    DBConnection.getConnection().close();
+                }
             } catch (SQLException e) {
             }
         }
