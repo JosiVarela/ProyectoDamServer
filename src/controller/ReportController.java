@@ -28,7 +28,6 @@ public class ReportController {
             objectOutputStream.flush();
 
         } catch (JRException e) {
-            e.printStackTrace();
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("JRE");
@@ -115,7 +114,6 @@ public class ReportController {
             objectOutputStream.flush();
 
         } catch (JRException e) {
-            e.printStackTrace();
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("JRE");
@@ -169,7 +167,6 @@ public class ReportController {
             objectOutputStream.flush();
 
         } catch (JRException e) {
-            e.printStackTrace();
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("JRE");
@@ -208,7 +205,6 @@ public class ReportController {
             objectOutputStream.flush();
 
         } catch (JRException e) {
-            e.printStackTrace();
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("JRE");
@@ -254,7 +250,6 @@ public class ReportController {
             objectOutputStream.flush();
 
         } catch (JRException e) {
-            e.printStackTrace();
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("JRE");

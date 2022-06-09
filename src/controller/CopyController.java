@@ -26,7 +26,6 @@ public class CopyController {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
         } catch (SQLException e) {
-            e.printStackTrace();
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("SQLE Error");
@@ -65,7 +64,6 @@ public class CopyController {
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataOutputStream.writeBoolean(existsCopy);
         } catch (IOException e) {
-            throw new RuntimeException(e);
         } catch (SQLException e) {
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
@@ -93,9 +91,7 @@ public class CopyController {
 
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataOutputStream.writeUTF("OK");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
         } catch (SQLException e) {
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
@@ -131,7 +127,6 @@ public class CopyController {
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataOutputStream.writeUTF("OK");
         } catch (IOException e) {
-            throw new RuntimeException(e);
         } catch (SQLException e) {
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
@@ -174,7 +169,6 @@ public class CopyController {
             objectOutputStream.flush();
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
         } catch (SQLException e) {
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());

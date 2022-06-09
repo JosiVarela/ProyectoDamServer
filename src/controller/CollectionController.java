@@ -31,13 +31,11 @@ public class CollectionController {
             objectOutputStream.flush();
 
         } catch (IOException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("SQLE Error");
             } catch (IOException ex) {
-                e.printStackTrace();
             }
         }
     }
@@ -73,14 +71,12 @@ public class CollectionController {
             objectOutputStream.flush();
 
         } catch (SQLException e) {
-            e.printStackTrace();
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("SQLE Error");
             } catch (IOException ex) {
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -109,9 +105,7 @@ public class CollectionController {
             objectOutputStream.flush();
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
         } catch (SQLException e) {
-            e.printStackTrace();
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("SQLE Error");
@@ -147,7 +141,6 @@ public class CollectionController {
             dataOutputStream.writeBoolean(result);
 
         } catch (IOException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
@@ -178,7 +171,6 @@ public class CollectionController {
             dataOutputStream.writeBoolean(result);
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
         } catch (SQLException e) {
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());

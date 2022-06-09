@@ -85,7 +85,6 @@ public class NumberController {
 
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
         } finally {
             try {
                 DBConnection.getConnection().close();
@@ -115,10 +114,8 @@ public class NumberController {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("SQLE Error");
             } catch (IOException ex) {
-                throw new RuntimeException(ex);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -182,7 +179,6 @@ public class NumberController {
             } catch (SQLException ex) {
             }
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (SQLException e) {
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
@@ -264,14 +260,12 @@ public class NumberController {
             objectOutputStream.flush();
 
         } catch (SQLException e) {
-            e.printStackTrace();
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("SQLE Error");
             } catch (IOException ex) {
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
         }finally {
             try{
                 DBConnection.getConnection().close();
@@ -348,7 +342,6 @@ public class NumberController {
             objectOutputStream.flush();
 
         } catch (SQLException e) {
-            e.printStackTrace();
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("SQLE Error");
@@ -388,14 +381,12 @@ public class NumberController {
             objectOutputStream.flush();
 
         } catch (SQLException e) {
-            e.printStackTrace();
             try {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 dataOutputStream.writeUTF("SQLE Error");
             } catch (IOException ex) {
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
         }finally {
             try{
                 DBConnection.getConnection().close();
