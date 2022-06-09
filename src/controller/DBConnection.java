@@ -15,11 +15,18 @@ public class DBConnection {
     public static void readConnectionData(){
         //TODO Read properties file for connection config
 
-        host="192.168.56.100";
+        /*host="192.168.56.100";
         port="3306";
         dbName="library";
         dbUser="interfaces";
-        dbPassword="abc123.";
+        dbPassword="abc123.";*/
+
+        host = ServerConfigurations.getDbHost();
+        port = ServerConfigurations.getDbPort();
+        dbName = ServerConfigurations.getDbName();
+        dbUser = ServerConfigurations.getDbUser();
+        dbPassword = ServerConfigurations.getDbPassword();
+
     }
 
     public static void connect() throws SQLException {
