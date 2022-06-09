@@ -91,34 +91,4 @@ public class ServerConfigurations {
     public static int getPort() throws NumberFormatException{
         return Integer.parseInt(CONFIG.get("port"));
     }
-
-    /*public static void storeTranslations(String language) throws IOException {
-        CONFIG.replace("lang", language);
-        storeConfiguration();
-    }
-
-    public static String getTranslations() {
-        return CONFIG.get("lang");
-    }
-
-    public static void storeServerConfig(ServerConfig serverConfig) throws IOException {
-        CONFIG.replace("server_ip", serverConfig.getIp());
-        CONFIG.replace("server_port", String.valueOf(serverConfig.getPort()));
-        storeConfiguration();
-    }
-
-    public static ServerConfig getServerConfig() {
-        ServerConfig serverConfig;
-
-        serverConfig = new ServerConfig(CONFIG.get("server_ip"), Integer.parseInt(CONFIG.get("server_port")));
-
-        return serverConfig;
-    }
-
-    public static void switchLanguage(String lang){
-        switch (lang){
-            case "es" -> Locale.setDefault(new Locale("es", "ES"));
-            case "gl" -> Locale.setDefault(new Locale("gl", "ES"));
-        }
-    }*/
 }
