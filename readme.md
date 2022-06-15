@@ -2,6 +2,7 @@
     Proyecto DAM Server 2022
 </h1>
 <h3>Descripción:</h3>
+Parte del servidor del proyecto de DAM
 <h3>Requisitos:</h3>
 <ul>
     <li>
